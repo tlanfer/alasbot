@@ -37,7 +37,7 @@ func (bot Bot) Start() {
 
 			bloodMoonMessage := bloodMoonMessage(days, hours, minutes)
 
-			return fmt.Sprint( playersMessage, timeMessage, bloodMoonMessage)
+			return fmt.Sprint( playersMessage, " ", timeMessage, " ", bloodMoonMessage)
 		}
 		return ""
 	})

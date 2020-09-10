@@ -29,15 +29,15 @@ func (bot Bot) Start() {
 				return "Sorry, could not get player count: " + err.Error()
 			}
 
-			gameTime, err := bot.Game.GameTime()
+			minutes, err := bot.Game.GameTime()
 			if err != nil {
 				return "Sorry, could not get server time: " + err.Error()
 			}
 
-			days := math.Floor(gameTime.Hours()/24)
-			time := gameTime - time.Duration(days)*24*time.Hour
+			//days := math.Floor(gameTime.Hours()/24)
+			//time := gameTime - time.Duration(days)*24*time.Hour
 
-			return fmt.Sprintf("There are %v/%v players connected. It is day %v, the time is %v", count, max, days, time)
+			return fmt.Sprintf("There are %v/%v players connected. The time is %v", count, max, minutes)
 		}
 		return ""
 	})

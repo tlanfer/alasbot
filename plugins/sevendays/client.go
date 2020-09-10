@@ -48,7 +48,7 @@ func (c *client) PlayerCount() (int, int, error) {
 	return count, max, nil
 }
 
-func (c *client) GameTime() (time.Duration, error) {
+func (c *client) GameTime() (int, error) {
 	props, err := c.props()
 	if err != nil {
 		return 0, err
@@ -60,9 +60,9 @@ func (c *client) GameTime() (time.Duration, error) {
 		return 0, err
 	}
 
-	duration := time.Minute * time.Duration(minutes)
+	//duration := time.Minute * time.Duration(minutes)
 
-	return duration, nil
+	return minutes, nil
 }
 
 func (c *client) props() (map[string]string, error) {

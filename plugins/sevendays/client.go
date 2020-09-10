@@ -1,6 +1,7 @@
 package sevendays
 
 import (
+	"fmt"
 	"github.com/tlanfer/alasbot"
 	"io/ioutil"
 	"math"
@@ -89,7 +90,7 @@ func (c *client) props() (map[string]string, error) {
 	conn, err := net.DialTimeout("tcp", c.addr, 5*time.Second)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to connect to %v", c.addr)
 	}
 
 	bytes, err := ioutil.ReadAll(conn)

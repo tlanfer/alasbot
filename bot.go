@@ -32,12 +32,12 @@ func (bot Bot) Start() {
 				return "Sorry, could not get server time: " + err.Error()
 			}
 
-			playersMessage := fmt.Sprintf("Server is online, %v/%v players", count, max)
+			playersMessage := fmt.Sprintf("Server is online, %v/%v players.", count, max)
 			timeMessage := fmt.Sprintf("Its day %v, the time is %02d:%02d.", days, hours, minutes)
 
 			bloodMoonMessage := bloodMoonMessage(days, hours, minutes)
 
-			return fmt.Sprint( playersMessage, "\n", timeMessage, bloodMoonMessage)
+			return fmt.Sprint( playersMessage, timeMessage, bloodMoonMessage)
 		}
 		return ""
 	})

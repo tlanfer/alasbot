@@ -89,7 +89,7 @@ func (c *client) props() (map[string]string, error) {
 	conn, err := net.DialTimeout("tcp", c.addr, 5*time.Second)
 
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	bytes, err := ioutil.ReadAll(conn)

@@ -6,22 +6,23 @@ import (
 )
 
 func main() {
-	in := 1386258.0
+	in := 1399072.0
 
-	out := convert(in)
-	fmt.Println(out)
+	days, hours, minutes := convert(in)
+
+	fmt.Printf("days %v, %02d:%02d", days, hours, minutes)
 }
 
-func convert(in float64) string {
-	minutes := (in /100)*6
+func convert(in float64) (int, int, int) {
+	totalMinutes := (in /100)*6
 
 	minutesInADay := 24*60
 
-	days := math.Floor(minutes / float64(minutesInADay))+1
-	minutesIntoTheDay := math.Mod(minutes, float64(minutesInADay))
+	days := math.Floor(totalMinutes/ float64(minutesInADay))+1
+	minutesIntoTheDay := math.Mod(totalMinutes, float64(minutesInADay))
 
 	hours := math.Floor(minutesIntoTheDay/60)
-	minutesIntoTheHour := math.Mod(minutesIntoTheDay, 60)
+	minutes := math.Mod(minutesIntoTheDay, 60)
 
-	return fmt.Sprintf("days %v, %v:%v", days, hours, minutesIntoTheHour)
+	return int(days), int(hours), int(minutes)
 }

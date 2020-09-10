@@ -68,7 +68,7 @@ func (c *client) GameTime() (int, int, int, error) {
 		return -1, -1, -1, err
 	}
 
-	totalMinutes := (serverTime / 1000) * dayLength
+	totalMinutes := (float64(serverTime) / 1000.0) * float64(dayLength)
 
 	minutesInADay := 24 * 60
 	minutesIntoTheDay := math.Mod(float64(totalMinutes), float64(minutesInADay))

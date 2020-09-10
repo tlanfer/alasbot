@@ -25,16 +25,17 @@ To run this, you will need:
 * Then run
 
 ```
-heroku create
+# heroku create
+
 Creating app... done, ⬢ mystic-wind-83
 Created http://mystic-wind-83.herokuapp.com/ | git@heroku.com:mystic-wind-83.git
 
-heroku config:set SEVEN_DAYS_SERVER="<hostname>:<port>"
-heroku config:set BOT_TOKEN="Bot <bot token>" 
+# heroku config:set SEVEN_DAYS_SERVER="<hostname>:<port>"
+# heroku config:set BOT_TOKEN="Bot <bot token>" 
 
-git push heroku master
+# git push heroku master
 
-heroku ps:scale worker=1
+# heroku ps:scale worker=1
 ```
 
 * Add the bot to your server. It should show as online

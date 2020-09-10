@@ -2,6 +2,7 @@ package alasbot
 
 import (
 	"fmt"
+	"math"
 	"time"
 )
 
@@ -33,7 +34,10 @@ func (bot Bot) Start() {
 				return "Sorry, could not get server time: " + err.Error()
 			}
 
-			return fmt.Sprintf("There are %v/%v players connected. The time is %v", count, max, gameTime)
+			days := math.Floor(gameTime.Hours()/24)
+			time := gameTime - time.Duration(days)*24*time.Hour
+
+			return fmt.Sprintf("There are %v/%v players connected. It is day %v, the time is %v", count, max, days, time)
 		}
 		return ""
 	})

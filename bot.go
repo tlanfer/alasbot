@@ -34,7 +34,7 @@ func (bot Bot) Start() {
 
 			nextBloodMoon := ((days/7)+1)*7
 
-			return fmt.Sprintf("There are %v/%v players connected. Its day %v, the time is %v:%v. The next bloodmoon will be on day %v", count, max, days, hours, minutes, nextBloodMoon)
+			return fmt.Sprintf("There are %v/%v players connected. Its day %v, the time is %02d:%02d. The next bloodmoon will be on day %v", count, max, days, hours, minutes, nextBloodMoon)
 		}
 		return ""
 	})

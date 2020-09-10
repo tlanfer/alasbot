@@ -3,6 +3,7 @@ package sevendays
 import (
 	"github.com/tlanfer/alasbot"
 	"io/ioutil"
+	"math"
 	"net"
 	"strconv"
 	"strings"
@@ -10,10 +11,10 @@ import (
 )
 
 const (
-	PlayerCount = "CurrentPlayers"
-	MaxPlayers  = "MaxPlayers"
-	ServerTime  = "CurrentServerTime"
-	DayCount    = "DayCount"
+	PlayerCount    = "CurrentPlayers"
+	MaxPlayers     = "MaxPlayers"
+	ServerTime     = "CurrentServerTime"
+	DayNightLength = "DayNightLength"
 )
 
 type client struct {
@@ -55,21 +56,28 @@ func (c *client) GameTime() (int, int, int, error) {
 		return 0, 0, 0, err
 	}
 
-	minutes, err := strconv.Atoi(props[ServerTime])
+	serverTime, err := strconv.Atoi(props[ServerTime])
 
 	if err != nil {
-		return 0, 0, 0, err
+		return -1, -1, -1, err
 	}
 
-	hours := 0
-
-	day, err := strconv.Atoi(props[DayCount])
+	dayLength, err := strconv.Atoi(props[DayNightLength])
 
 	if err != nil {
-		return 0, 0, 0, err
+		return -1, -1, -1, err
 	}
 
-	return day, hours, minutes, nil
+	totalMinutes := (serverTime / 1000) * dayLength
+
+	minutesInADay := 24 * 60
+	minutesIntoTheDay := math.Mod(float64(totalMinutes), float64(minutesInADay))
+
+	days := math.Floor(float64(totalMinutes)/float64(minutesInADay)) + 1
+	hours := math.Floor(minutesIntoTheDay / 60)
+	minutes := math.Mod(minutesIntoTheDay, 60)
+
+	return int(days), int(hours), int(minutes), nil
 }
 
 func (c *client) props() (map[string]string, error) {

@@ -27,15 +27,14 @@ func (bot Bot) Start() {
 				return "Sorry, could not get player count: " + err.Error()
 			}
 
-			days, _, _, err := bot.Game.GameTime()
+			days, hours, minutes, err := bot.Game.GameTime()
 			if err != nil {
 				return "Sorry, could not get server time: " + err.Error()
 			}
 
-			//days := math.Floor(gameTime.Hours()/24)
-			//time := gameTime - time.Duration(days)*24*time.Hour
+			nextBloodMoon := ((days/7)+1)*7
 
-			return fmt.Sprintf("There are %v/%v players connected. The time is %v", count, max, days)
+			return fmt.Sprintf("There are %v/%v players connected. Its day %v, the time is %v:%v. The next bloodmoon will be on day %v", count, max, days, hours, minutes, nextBloodMoon)
 		}
 		return ""
 	})

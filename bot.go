@@ -2,8 +2,6 @@ package alasbot
 
 import (
 	"fmt"
-	"math"
-	"time"
 )
 
 type Bot struct {
@@ -13,7 +11,7 @@ type Bot struct {
 
 type Game interface {
 	PlayerCount() (int, int, error)
-	GameTime() (time.Duration, error)
+	GameTime() (int, error)
 }
 
 type Chat interface {

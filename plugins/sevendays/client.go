@@ -11,8 +11,8 @@ import (
 
 const (
 	PlayerCount = "CurrentPlayers"
-	MaxPlayers = "MaxPlayers"
-	ServerTime = "CurrentServerTime"
+	MaxPlayers  = "MaxPlayers"
+	ServerTime  = "CurrentServerTime"
 )
 
 type client struct {

@@ -1,6 +1,9 @@
 package alasbot
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type Bot struct {
 	Game Game
@@ -9,6 +12,7 @@ type Bot struct {
 
 type Game interface {
 	PlayerCount() (int, int, error)
+	GameTime() (time.Duration, error)
 }
 
 type Chat interface {
@@ -24,7 +28,12 @@ func (bot Bot) Start() {
 				return "Sorry, could not get player count: " + err.Error()
 			}
 
-			return fmt.Sprintf("There are %v/%v players connected", count, max)
+			gameTime, err := bot.Game.GameTime()
+			if err != nil {
+				return "Sorry, could not get server time: " + err.Error()
+			}
+
+			return fmt.Sprintf("There are %v/%v players connected. The time is %v", count, max, gameTime)
 		}
 		return ""
 	})

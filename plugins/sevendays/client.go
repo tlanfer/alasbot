@@ -6,15 +6,19 @@ import (
 	"net"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const (
 	PlayerCount = "CurrentPlayers"
 	MaxPlayers = "MaxPlayers"
+	ServerTime = "CurrentServerTime"
 )
 
 type client struct {
-	addr string
+	addr          string
+	properties    map[string]string
+	propertiesAge time.Time
 }
 
 func New(addr string) alasbot.Game {
@@ -44,7 +48,28 @@ func (c *client) PlayerCount() (int, int, error) {
 	return count, max, nil
 }
 
+func (c *client) GameTime() (time.Duration, error) {
+	props, err := c.props()
+	if err != nil {
+		return 0, err
+	}
+
+	minutes, err := strconv.Atoi(props[ServerTime])
+
+	if err != nil {
+		return 0, err
+	}
+
+	duration := time.Minute * time.Duration(minutes)
+
+	return duration, nil
+}
+
 func (c *client) props() (map[string]string, error) {
+
+	if time.Since(c.propertiesAge) < time.Duration(10*time.Second) {
+		return c.properties, nil
+	}
 
 	conn, err := net.Dial("tcp", c.addr)
 
@@ -65,6 +90,9 @@ func (c *client) props() (map[string]string, error) {
 		}
 
 	}
+
+	c.properties = properties
+	c.propertiesAge = time.Now()
 
 	return properties, nil
 }

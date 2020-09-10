@@ -13,6 +13,7 @@ const (
 	PlayerCount = "CurrentPlayers"
 	MaxPlayers  = "MaxPlayers"
 	ServerTime  = "CurrentServerTime"
+	DayCount    = "DayCount"
 )
 
 type client struct {
@@ -48,21 +49,27 @@ func (c *client) PlayerCount() (int, int, error) {
 	return count, max, nil
 }
 
-func (c *client) GameTime() (int, error) {
+func (c *client) GameTime() (int, int, int, error) {
 	props, err := c.props()
 	if err != nil {
-		return 0, err
+		return 0, 0, 0, err
 	}
 
 	minutes, err := strconv.Atoi(props[ServerTime])
 
 	if err != nil {
-		return 0, err
+		return 0, 0, 0, err
 	}
 
-	//duration := time.Minute * time.Duration(minutes)
+	hours := 0
 
-	return minutes, nil
+	day, err := strconv.Atoi(props[DayCount])
+
+	if err != nil {
+		return 0, 0, 0, err
+	}
+
+	return day, hours, minutes, nil
 }
 
 func (c *client) props() (map[string]string, error) {

@@ -11,7 +11,7 @@ type Bot struct {
 
 type Game interface {
 	PlayerCount() (int, int, error)
-	GameTime() (int, error)
+	GameTime() (int, int, int, error)
 }
 
 type Chat interface {
@@ -27,7 +27,7 @@ func (bot Bot) Start() {
 				return "Sorry, could not get player count: " + err.Error()
 			}
 
-			minutes, err := bot.Game.GameTime()
+			days, _, _, err := bot.Game.GameTime()
 			if err != nil {
 				return "Sorry, could not get server time: " + err.Error()
 			}
@@ -35,7 +35,7 @@ func (bot Bot) Start() {
 			//days := math.Floor(gameTime.Hours()/24)
 			//time := gameTime - time.Duration(days)*24*time.Hour
 
-			return fmt.Sprintf("There are %v/%v players connected. The time is %v", count, max, minutes)
+			return fmt.Sprintf("There are %v/%v players connected. The time is %v", count, max, days)
 		}
 		return ""
 	})

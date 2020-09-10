@@ -86,7 +86,7 @@ func (c *client) props() (map[string]string, error) {
 		return c.properties, nil
 	}
 
-	conn, err := net.Dial("tcp", c.addr)
+	conn, err := net.DialTimeout("tcp", c.addr, 5*time.Second)
 
 	if err != nil {
 		panic(err)

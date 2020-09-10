@@ -32,10 +32,34 @@ func (bot Bot) Start() {
 				return "Sorry, could not get server time: " + err.Error()
 			}
 
-			nextBloodMoon := ((days/7)+1)*7
+			playersMessage := fmt.Sprintf("Server is online, %v/%v players", count, max)
+			timeMessage := fmt.Sprintf("Its day %v, the time is %02d:%02d.", days, hours, minutes)
 
-			return fmt.Sprintf("There are %v/%v players connected. Its day %v, the time is %02d:%02d. The next bloodmoon will be on day %v", count, max, days, hours, minutes, nextBloodMoon)
+			bloodMoonMessage := bloodMoonMessage(days, hours, minutes)
+
+			return fmt.Sprint( playersMessage, timeMessage, bloodMoonMessage)
 		}
 		return ""
 	})
+}
+
+func bloodMoonMessage(days, hours, minutes int) string {
+	msg := fmt.Sprintf("The next bloodmoon will be on day %v.",((days/7)+1)*7)
+
+	if (days % 7) == 0 {
+		msg = "The next bloodmoon will be today."
+
+		if hours >= 22 {
+			msg =  "A bloodmoon is active!"
+		}
+	}
+
+	if (days % 7) == 1 {
+		if hours < 4 {
+			msg =  "A bloodmoon is active!"
+		}
+	}
+
+
+	return msg
 }

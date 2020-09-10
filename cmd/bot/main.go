@@ -9,10 +9,27 @@ import (
 	"time"
 )
 
+var (
+	sevenDaysServer = os.Getenv("SEVEN_DAYS_SERVER")
+	botToken        = os.Getenv("BOT_TOKEN")
+)
 func main() {
 
-	game := sevendays.New(os.Getenv("SEVEN_DAYS_SERVER"))
-	chat, _ := discord.New(os.Getenv("BOT_TOKEN"))
+	if sevenDaysServer == "" {
+		panic("SEVEN_DAYS_SERVER missing")
+	}
+
+	if botToken == "" {
+		panic("BOT_TOKEN missing")
+	}
+
+
+	game := sevendays.New(sevenDaysServer)
+	chat, err := discord.New(botToken)
+
+	if err != nil {
+		panic(err)
+	}
 
 	bot := alasbot.Bot{
 		Game: game,

@@ -2,7 +2,7 @@
 
 This is a simple discord bot to let people ask for the status of a 7 days to die server.
 
-## s
+## Prerequisited
 
 To run this, you will need:
 * A 7 days to die server

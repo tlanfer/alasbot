@@ -11,7 +11,7 @@ type Bot struct {
 
 type Game interface {
 	PlayerCount() (int, int, error)
-	GameTime() (int, int, int, error)
+	GameTime() (int, int, int, int, error)
 }
 
 type Chat interface {
@@ -27,7 +27,7 @@ func (bot Bot) Start() {
 				return "Sorry, could not get player count: " + err.Error()
 			}
 
-			days, hours, minutes, err := bot.Game.GameTime()
+			days, hours, minutes, bloodMoonFrequency, err := bot.Game.GameTime()
 			if err != nil {
 				return "Sorry, could not get server time: " + err.Error()
 			}
@@ -35,7 +35,7 @@ func (bot Bot) Start() {
 			playersMessage := fmt.Sprintf("Server is online, %v/%v players.", count, max)
 			timeMessage := fmt.Sprintf("Its day %v, the time is %02d:%02d.", days, hours, minutes)
 
-			bloodMoonMessage := bloodMoonMessage(days, hours, minutes)
+			bloodMoonMessage := bloodMoonMessage(days, hours, minutes, bloodMoonFrequency)
 
 			return fmt.Sprint( playersMessage, " ", timeMessage, " ", bloodMoonMessage)
 		}
@@ -43,8 +43,8 @@ func (bot Bot) Start() {
 	})
 }
 
-func bloodMoonMessage(days, hours, minutes int) string {
-	msg := fmt.Sprintf("The next bloodmoon will be on day %v.",((days/7)+1)*7)
+func bloodMoonMessage(days, hours, minutes, bloodMoonFrequency int) string {
+	msg := fmt.Sprintf("The next bloodmoon will be on day %v.",((days/bloodMoonFrequency)+1)*bloodMoonFrequency)
 
 	if (days % 7) == 0 {
 		msg = "The next bloodmoon will be today."

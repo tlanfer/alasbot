@@ -16,6 +16,7 @@ const (
 	MaxPlayers     = "MaxPlayers"
 	ServerTime     = "CurrentServerTime"
 	DayNightLength = "DayNightLength"
+	BloodMoonFrequency = "BloodMoonFrequency"
 )
 
 type client struct {
@@ -51,22 +52,29 @@ func (c *client) PlayerCount() (int, int, error) {
 	return count, max, nil
 }
 
-func (c *client) GameTime() (int, int, int, error) {
+func (c *client) GameTime() (int, int, int, int, error) {
 	props, err := c.props()
 	if err != nil {
-		return 0, 0, 0, err
+		return 0, 0, 0, 0, err
 	}
 
 	serverTime, err := strconv.Atoi(props[ServerTime])
 
 	if err != nil {
-		return -1, -1, -1, err
+		return -1, -1, -1, -1, err
 	}
 
 	dayLength, err := strconv.Atoi(props[DayNightLength])
 
 	if err != nil {
-		return -1, -1, -1, err
+		return -1, -1, -1, -1, err
+	}
+
+
+	bloodMoonFrequency, err := strconv.Atoi(props[BloodMoonFrequency])
+
+	if err != nil {
+		return -1, -1, -1, -1, err
 	}
 
 	totalMinutes := (float64(serverTime) / 1000.0) * float64(dayLength)
@@ -78,7 +86,7 @@ func (c *client) GameTime() (int, int, int, error) {
 	hours := math.Floor(minutesIntoTheDay / 60)
 	minutes := math.Mod(minutesIntoTheDay, 60)
 
-	return int(days), int(hours), int(minutes), nil
+	return int(days), int(hours), int(minutes), bloodMoonFrequency, nil
 }
 
 func (c *client) props() (map[string]string, error) {

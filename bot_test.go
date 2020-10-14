@@ -67,6 +67,36 @@ func TestBloodMoonMessage(t *testing.T) {
 			},
 			"The next bloodmoon will be on day 609.",
 		},
+		{
+			args{
+				609,
+				10,
+				10,
+				14,
+				595,
+			},
+			"The next bloodmoon will be today.",
+		},
+		{
+			args{
+				609,
+				23,
+				10,
+				14,
+				595,
+			},
+			"A bloodmoon is active!",
+		},
+		{
+			args{
+				610,
+				02,
+				10,
+				14,
+				595,
+			},
+			"A bloodmoon is active!",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(fmt.Sprintf("%+v", tt.args), func(t *testing.T) {

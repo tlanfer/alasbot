@@ -1,38 +1,77 @@
 package alasbot
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
-func Test_bloodMoonMessage(t *testing.T) {
+func TestBloodMoonMessage(t *testing.T) {
 	type args struct {
-		days    int
-		hours   int
-		minutes int
+		days               int
+		hours              int
+		minutes            int
+		bloodMoonFrequency int
+		offset             int
 	}
 	tests := []struct {
-		name string
 		args args
 		want string
 	}{
 		{
-			"normal day",
-			args{1, 6, 3},
+			args{
+				1,
+				10,
+				10,
+				7,
+				0,
+			},
 			"The next bloodmoon will be on day 7.",
 		},
 		{
-			"bloodmoon day, early",
-			args{7, 14, 12},
-			"The next bloodmoon will be today.",
+			args{
+				600,
+				10,
+				10,
+				7,
+				0,
+			},
+			"The next bloodmoon will be on day 602.",
 		},
 		{
-			"bloodmoon day, early",
-			args{7, 23, 12},
-			"A bloodmoon is active!",
+			args{
+				603,
+				10,
+				10,
+				7,
+				0,
+			},
+			"The next bloodmoon will be on day 609.",
+		},
+		{
+			args{
+				600,
+				10,
+				10,
+				14,
+				595,
+			},
+			"The next bloodmoon will be on day 609.",
+		},
+		{
+			args{
+				603,
+				10,
+				10,
+				14,
+				595,
+			},
+			"The next bloodmoon will be on day 609.",
 		},
 	}
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := bloodMoonMessage(tt.args.days, tt.args.hours, tt.args.minutes); got != tt.want {
-				t.Errorf("bloodMoonMessage() = %v, want %v", got, tt.want)
+		t.Run(fmt.Sprintf("%+v", tt.args), func(t *testing.T) {
+			if got := BloodMoonMessage(tt.args.days, tt.args.hours, tt.args.minutes, tt.args.bloodMoonFrequency, tt.args.offset); got != tt.want {
+				t.Errorf("BloodMoonMessage() = %v, want %v", got, tt.want)
 			}
 		})
 	}

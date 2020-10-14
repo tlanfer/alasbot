@@ -5,8 +5,9 @@ import (
 )
 
 type Bot struct {
-	Game Game
-	Chat Chat
+	Game            Game
+	Chat            Chat
+	BloodmoonOffset int
 }
 
 type Game interface {
@@ -35,7 +36,7 @@ func (bot Bot) Start() {
 			playersMessage := fmt.Sprintf("Server is online, %v/%v players.", count, max)
 			timeMessage := fmt.Sprintf("Its day %v, the time is %02d:%02d.", days, hours, minutes)
 
-			bloodMoonMessage := bloodMoonMessage(days, hours, minutes, bloodMoonFrequency)
+			bloodMoonMessage := BloodMoonMessage(days, hours, minutes, bloodMoonFrequency, bot.BloodmoonOffset)
 
 			return fmt.Sprint( playersMessage, " ", timeMessage, " ", bloodMoonMessage)
 		}
@@ -43,8 +44,8 @@ func (bot Bot) Start() {
 	})
 }
 
-func bloodMoonMessage(days, hours, minutes, bloodMoonFrequency int) string {
-	msg := fmt.Sprintf("The next bloodmoon will be on day %v.",((days/bloodMoonFrequency)+1)*bloodMoonFrequency)
+func BloodMoonMessage(days, hours, minutes, bloodMoonFrequency, offset int) string {
+	msg := fmt.Sprintf("The next bloodmoon will be on day %v.",(((days-offset)/bloodMoonFrequency)+1)*bloodMoonFrequency+offset)
 
 	if (days % 7) == 0 {
 		msg = "The next bloodmoon will be today."

@@ -32,7 +32,7 @@ func main() {
 		if err != nil {
 			panic("BLOODMOON_OFFSET invalid")
 		}
-		bloodMoonOffset = i
+		bloodMoonOffsetDays = int(i)
 	}
 
 	game := sevendays.New(sevenDaysServer)

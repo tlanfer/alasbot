@@ -108,7 +108,6 @@ func (c *client) props() (map[string]string, error) {
 
 	for _, line := range lines {
 		line = strings.TrimSpace(line)
-		fmt.Println(line)
 		parts := strings.SplitN(line, ":", 2)
 		if len(parts) == 2 {
 			properties[parts[0]] = parts[1]

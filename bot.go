@@ -42,6 +42,7 @@ func (bot Bot) Start() {
 		}
 		return ""
 	})
+
 }
 
 func BloodMoonMessage(days, hours, minutes, bloodMoonFrequency, offset int) string {

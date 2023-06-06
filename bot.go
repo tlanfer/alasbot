@@ -38,7 +38,7 @@ func (bot Bot) Start() {
 
 			bloodMoonMessage := BloodMoonMessage(days, hours, minutes, bloodMoonFrequency, bot.BloodmoonOffset)
 
-			return fmt.Sprint( playersMessage, " ", timeMessage, " ", bloodMoonMessage)
+			return fmt.Sprint(playersMessage, " ", timeMessage, " ", bloodMoonMessage)
 		}
 		return ""
 	})
@@ -46,22 +46,21 @@ func (bot Bot) Start() {
 }
 
 func BloodMoonMessage(days, hours, minutes, bloodMoonFrequency, offset int) string {
-	msg := fmt.Sprintf("The next bloodmoon will be on day %v.",(((days-offset)/bloodMoonFrequency)+1)*bloodMoonFrequency+offset)
+	msg := fmt.Sprintf("The next bloodmoon will be on day %v.", (((days-offset)/bloodMoonFrequency)+1)*bloodMoonFrequency+offset)
 
-	if ((days-offset) % bloodMoonFrequency) == 0 {
+	if ((days - offset) % bloodMoonFrequency) == 0 {
 		msg = "The next bloodmoon will be today."
 
 		if hours >= 22 {
-			msg =  "A bloodmoon is active!"
+			msg = "A bloodmoon is active!"
 		}
 	}
 
-	if ((days-offset) % bloodMoonFrequency) == 1 {
+	if ((days - offset) % bloodMoonFrequency) == 1 {
 		if hours < 4 {
-			msg =  "A bloodmoon is active!"
+			msg = "A bloodmoon is active!"
 		}
 	}
-
 
 	return msg
 }

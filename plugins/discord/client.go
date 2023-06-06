@@ -16,6 +16,9 @@ func New(token string) (alasbot.Chat, error) {
 	dg.Identify.Intents = discordgo.MakeIntent(discordgo.IntentsGuildMessages | discordgo.IntentsDirectMessages)
 
 	err = dg.Open()
+	if err != nil {
+		return nil, err
+	}
 
 	return &discordClient{
 		dg: dg,

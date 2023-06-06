@@ -12,10 +12,10 @@ import (
 )
 
 const (
-	PlayerCount    = "CurrentPlayers"
-	MaxPlayers     = "MaxPlayers"
-	ServerTime     = "CurrentServerTime"
-	DayNightLength = "DayNightLength"
+	PlayerCount        = "CurrentPlayers"
+	MaxPlayers         = "MaxPlayers"
+	ServerTime         = "CurrentServerTime"
+	DayNightLength     = "DayNightLength"
 	BloodMoonFrequency = "BloodMoonFrequency"
 )
 
@@ -34,19 +34,19 @@ func New(addr string) alasbot.Game {
 func (c *client) PlayerCount() (int, int, error) {
 	props, err := c.props()
 	if err != nil {
-		return 0, 0, err
+		return 0, 0, fmt.Errorf("props() failed: %w", err)
 	}
 
 	count, err := strconv.Atoi(props[PlayerCount])
 
 	if err != nil {
-		return -1, -1, err
+		return -1, -1, fmt.Errorf("strconv.Atoi[PlayerCount] failed: %w", err)
 	}
 
 	max, err := strconv.Atoi(props[MaxPlayers])
 
 	if err != nil {
-		return -1, -1, err
+		return -1, -1, fmt.Errorf("strconv.Atoi[MaxPlayers] failed: %w", err)
 	}
 
 	return count, max, nil
@@ -69,7 +69,6 @@ func (c *client) GameTime() (int, int, int, int, error) {
 	if err != nil {
 		return -1, -1, -1, -1, err
 	}
-
 
 	bloodMoonFrequency, err := strconv.Atoi(props[BloodMoonFrequency])
 
@@ -108,6 +107,8 @@ func (c *client) props() (map[string]string, error) {
 	properties := map[string]string{}
 
 	for _, line := range lines {
+		line = strings.TrimSpace(line)
+		fmt.Println(line)
 		parts := strings.SplitN(line, ":", 2)
 		if len(parts) == 2 {
 			properties[parts[0]] = parts[1]

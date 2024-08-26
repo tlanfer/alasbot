@@ -23,7 +23,7 @@ To run this, you will need:
 
 There is a docker image to run it wherever
 
-```
+```yaml
 services:
   alasbot:
     image: ghcr.io/tlanfer/alasbot:main

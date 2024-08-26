@@ -11,7 +11,7 @@ To run this, you will need:
 
 ## Running the bot
 
-### Run locally
+### Build and run from source
 
 * Compile: `go build -o bot.exe cmd/bot/main.go`
 * Set environment variables 
@@ -19,30 +19,20 @@ To run this, you will need:
   * `BOT_TOKEN="Bot <bot token>"`
 * Run `bot.exe`
 
-### Running on heroku
-
-* Check this project out
-* Make an account on heroku and install the heroku cli
-* Run ``heroku login`` to login (duh)
-* Then run
-
-```
-# heroku create
-
-Creating app... done, ⬢ mystic-wind-83
-Created http://mystic-wind-83.herokuapp.com/ | git@heroku.com:mystic-wind-83.git
-
-# heroku config:set SEVEN_DAYS_SERVER="<hostname>:<port>"
-# heroku config:set BOT_TOKEN="Bot <bot token>" 
-
-# git push heroku master
-
-# heroku ps:scale worker=1
-```
-
 ### Running it somewhere else
-If you want to run the bot somewhere else, you're on your own.
-It should easily run anywhere you can run linux executable.
+
+There is a docker image to run it wherever
+
+```
+services:
+  alasbot:
+    image: ghcr.io/tlanfer/alasbot:main
+    restart: always
+    environment:
+     - BLOODMOON_OFFSET=0
+     - BOT_TOKEN=Bot <bot token>
+     - SEVEN_DAYS_SERVER=<hostname>:<port>
+```
 
 
 ## Adding it to your server
